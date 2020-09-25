@@ -2,8 +2,6 @@
 bucket for metrics and analyzing usage and debugging high usage'''
 
 
-# Based on https://docs.influxdata.com/influxdb/v2.0/tools/client-libraries/python/
-# $ python3.8
 import logging
 import os
 
@@ -25,9 +23,9 @@ def get_devices():
     logger.info('Getting devices')
     import subprocess
     import json
-    output = subprocess.check_output(['python3.8', 'sample.py', 'devices'])
+    output = subprocess.check_output(['python3', 'sample.py', 'devices'])
     logger.info('Parsing results')
-    devices = json.loads(output)
+    devices = json.loads(output.decode('utf8'))
     return devices
 
 

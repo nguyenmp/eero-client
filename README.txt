@@ -1,3 +1,41 @@
+This is a fork of https://github.com/343max/eero-client
+
+It contains an additional script to take the networking metrics of devices and forward them to an InfluxDB cloud instance
+
+Simple tests for some logic can be run with:
+```
+BUCKET="" ORG="" TOKEN="" URL="" python3 -m pytest forwarder.py
+```
+
+This was deployed onto the [hikariita server](https://github.com/nguyenmp/hikariita), that page contains more details on access.
+```
+scp -r eero-client/ root@159.65.102.173:~/
+```
+
+First you need to authenticate using the given client to get a token/cookie file.
+```
+python3 sample.py
+```
+
+You can do a one-shot forward like so:
+```
+BUCKET=03258913b97e3475 ORG=05bcb1a08937ee28 TOKEN="SECRET" URL="https://us-west-2-1.aws.cloud2.influxdata.com" python3 forwarder.py
+```
+
+Or you can loop it like so:
+
+```
+/bin/bash -c 'while true; do <the thing above>; sleep 5; done' &
+```
+
+If you're trying to 'redeploy' meaning delete existing runs, find PID via:
+```bash
+ps aux | grep python
+killall <pid>
+```
+
+### Below is from the original README.txt
+
 # unofficial barebone client lib for eero router (https://eero.com)
 
 This is a very simple client lib to access information about your eero home network. I got this API by intercepting the traffic of the eero app.
